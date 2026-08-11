@@ -1,0 +1,284 @@
+$notebookPath = "c:\Users\apiwi\Downloads\Python and Doc\Python and Doc\Python_Version 2\Module_04_Repetition\02_Lab_Exercises.ipynb"
+
+$fullLabJson = @'
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Lab Exercises: Module 04 - Repetition\n",
+        "\n",
+        "แบบฝึกหัดและการประยุกต์ใช้การควบคุมทิศทางการทำงานซ้ำวนลูป (Looping) สำหรับ Module 04"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## 04-01: Multiples of 3 or 5\n",
+        "\n",
+        "จงเขียนโปรแกรมที่คำนวณหาผลรวมของจำนวนเต็มบวกทุกจำนวนที่มีค่า**ต่ำกว่า**จำนวนที่เป็นข้อมูลนำเข้าและมี 3 หรือ 5 เป็นตัวประกอบ เช่น หากข้อมูลนำเข้าคือ 20 คำตอบที่เราต้องการจะเท่ากับ 3 + 5 + 6 + 9 + 10 + 12 + 15 + 18 = 78 (สังเกตว่าคำตอบของเราไม่รวมค่า 20 เนื่องจากเราสนใจเฉพาะจำนวนที่มีค่าต่ำกว่า 20)\n",
+        "\n",
+        "### ข้อมูลนำเข้า\n",
+        "มีบรรทัดเดียว เป็นจำนวนเต็มบวก\n",
+        "\n",
+        "### ข้อมูลส่งออก\n",
+        "มีบรรทัดเดียว แสดงผลรวมของจำนวนเต็มบวกทุกจำนวนที่มีค่าต่ำกว่าจำนวนที่เป็นข้อมูลนำเข้าและมี 3 หรือ 5 เป็นตัวประกอบ\n",
+        "\n",
+        "### ตัวอย่าง\n",
+        "| Input (จากแป้นพิมพ์) | Output (ทางจอภาพ) |\n",
+        "| :--- | :--- |\n",
+        "| `20` | `78` |\n",
+        "| `25` | `143` |\n",
+        "| `3` | `0` |"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# 04-01: Multiples of 3 or 5\n",
+        "n = int(input())\n",
+        "total = 0\n",
+        "for i in range(1, n):\n",
+        "    if i % 3 == 0 or i % 5 == 0:\n",
+        "        total += i\n",
+        "print(total)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## 04-03: ค่าเฉลี่ย\n",
+        "\n",
+        "จงเขียนโปรแกรมหาค่าเฉลี่ยของชุดข้อมูลที่รับจากแป้นพิมพ์\n",
+        "\n",
+        "### ข้อมูลนำเข้า\n",
+        "จำนวนจริงบรรทัดละจำนวน บรรทัดสุดท้ายเป็นตัวอักษร `q`\n",
+        "\n",
+        "### ข้อมูลส่งออก\n",
+        "ค่าเฉลี่ยของข้อมูลที่รับเข้ามา โดยแสดงเลขหลังจุดทศนิยม 2 ตำแหน่ง\n",
+        "ถ้าไม่มีข้อมูลเลย ให้แสดง `No Data`\n",
+        "\n",
+        "### ตัวอย่าง\n",
+        "| Input (จากแป้นพิมพ์) | Output (ทางจอภาพ) |\n",
+        "| :--- | :--- |\n",
+        "| `10`<br>`20`<br>`30`<br>`41.5`<br>`q` | `25.38` |\n",
+        "| `10`<br>`20`<br>`q` | `15.0` |\n",
+        "| `q` | `No Data` |"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# 04-03: ค่าเฉลี่ย\n",
+        "total = 0.0\n",
+        "count = 0\n",
+        "\n",
+        "while True:\n",
+        "    line = input()\n",
+        "    if line == \"q\":\n",
+        "        break\n",
+        "    total += float(line)\n",
+        "    count += 1\n",
+        "\n",
+        "if count > 0:\n",
+        "    print(round(total / count, 2))\n",
+        "else:\n",
+        "    print(\"No Data\")\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## 04-04: การประมาณค่าของ log10 a ด้วย bisection (แบบที่ 1)\n",
+        "\n",
+        "เราสามารถหาค่าประมาณของ $\\sqrt{a}$ ได้ด้วยวิธี bisection ดังนี้\n",
+        "1. ให้ $L = 0, U = a$\n",
+        "2. เริ่มให้คำตอบอยู่ในช่วง $[L, U]$\n",
+        "3. $x =$ จุดกึ่งกลางของช่วง\n",
+        "4. ทำข้างล่างนี้ซ้ำ ถ้า $x^2$ ยังมีค่าไม่ใกล้กับ $a$ (\"ใกล้กัน\" เมื่อ $|a - x^2| \\le 10^{-10}\\max(a, x^2)$)\n",
+        "   - ถ้า $x^2 > a$ ก็เปลี่ยนช่วงเป็น $[L, x]$\n",
+        "   - ถ้า $x^2 < a$ ก็เปลี่ยนช่วงเป็น $[x, U]$\n",
+        "   - $x =$ จุดกึ่งกลางของช่วง\n",
+        "5. $x$ คือค่าประมาณของ $\\sqrt{a}$\n",
+        "\n",
+        "จงนำแนวคิดของ bisection ข้างต้นมาใช้หาค่าประมาณของ $\\log_{10} a$ โดยที่ $a \\ge 1$\n",
+        "\n",
+        "### ข้อมูลนำเข้า\n",
+        "จำนวนจริง $a$ ($a$ ที่ใช้ในการทดสอบมีค่าระหว่าง 1 ถึง 600)\n",
+        "\n",
+        "### ข้อมูลส่งออก\n",
+        "ค่าประมาณของ $\\log_{10} a$ โดยแสดงเลขหลังจุดทศนิยม 6 ตำแหน่ง\n",
+        "\n",
+        "### ตัวอย่าง\n",
+        "| Input (จากแป้นพิมพ์) | Output (ทางจอภาพ) |\n",
+        "| :--- | :--- |\n",
+        "| `1` | `0.0` |\n",
+        "| `100` | `2.0` |\n",
+        "| `250.0` | `2.39794` |"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# 04-04: การประมาณค่าของ log10 a ด้วย bisection (แบบที่ 1)\n",
+        "a = float(input())\n",
+        "\n",
+        "L = 0.0\n",
+        "U = a\n",
+        "x = (L + U) / 2.0\n",
+        "\n",
+        "while abs(a - 10**x) > 10**(-10) * max(a, 10**x):\n",
+        "    if 10**x > a:\n",
+        "        U = x\n",
+        "    else:\n",
+        "        L = x\n",
+        "    x = (L + U) / 2.0\n",
+        "\n",
+        "print(round(x, 6))\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## 04-07: การนับจำนวนคำที่สนใจ\n",
+        "\n",
+        "จงเขียนโปรแกรมที่รับคำที่สนใจ แล้วก็รับข้อความหนึ่งบรรทัด จากนั้นนับว่าในข้อความที่รับ มีจำนวนคำที่สนใจกี่คำ\n",
+        "\n",
+        "*หมายเหตุ:* กำหนดให้คำที่สนใจมีแต่ตัวอักษรภาษาอังกฤษ และ ข้อความที่รับเข้ามาประกอบด้วยตัวอักษรภาษาอังกฤษ ตัวเลข หรือ เครื่องหมายวรรคตอน `\"` `(` `)` `,` `.` หรือ `'`\n",
+        "\n",
+        "### ข้อมูลนำเข้า\n",
+        "สตริง 2 บรรทัด บรรทัดแรกคือคำที่สนใจ บรรทัดที่สองคือข้อความ\n",
+        "\n",
+        "### ข้อมูลส่งออก\n",
+        "จำนวนคำที่สนใจในข้อความที่รับเข้ามา (ให้ถือว่าตัวอังกฤษใหญ่ไม่เหมือนตัวเล็ก)\n",
+        "\n",
+        "### ตัวอย่าง\n",
+        "| Input (จากแป้นพิมพ์) | Output (ทางจอภาพ) |\n",
+        "| :--- | :--- |\n",
+        "| `the`<br>`The word \"the\" is one of the most common words in English.` | `2` |\n",
+        "| `Sadet`<br>`\"Phra Sadet\" tham \"Phra Sadet\" wa ja sadet rue mai sadet.` | `2` |"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# 04-07: การนับจำนวนคำที่สนใจ\n",
+        "target = input()\n",
+        "text = input()\n",
+        "\n",
+        "# แทนที่เครื่องหมายวรรคตอนด้วยช่องว่าง\n",
+        "punct = \"\\\"(),.'\"\n",
+        "clean_text = \"\"\n",
+        "for c in text:\n",
+        "    if c in punct:\n",
+        "        clean_text += \" \"\n",
+        "    else:\n",
+        "        clean_text += c\n",
+        "\n",
+        "# แยกคำและนับจำนวน\n",
+        "words = clean_text.split()\n",
+        "count = 0\n",
+        "for w in words:\n",
+        "    if w == target:\n",
+        "        count += 1\n",
+        "\n",
+        "print(count)\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "\n",
+        "## 04-08: การวาดสามเหลี่ยมสูง h\n",
+        "\n",
+        "จงเขียนโปรแกรมรับจำนวนเต็มที่แทนความสูง $h$ แล้ววาดสามเหลี่ยมหน้าจั่วความสูง $h$ ฐานกว้าง $2h - 1$\n",
+        "\n",
+        "### ข้อมูลนำเข้า\n",
+        "จำนวนเต็มหนึ่งจำนวนแทนความสูงสามเหลี่ยมหน้าจั่ว (ความสูง $\\ge 2$)\n",
+        "\n",
+        "### ข้อมูลส่งออก\n",
+        "สตริงจำนวนบรรทัดเท่ากับความสูงที่ได้รับ แทนรูปสามเหลี่ยมหน้าจั่ว ดังตัวอย่างข้างล่างนี้\n",
+        "\n",
+        "### ตัวอย่าง\n",
+        "| Input (จากแป้นพิมพ์) | Output (ทางจอภาพ) |\n",
+        "| :--- | :--- |\n",
+        "| `2` | ` * `<br>`***` |\n",
+        "| `3` | `  *  `<br>` * * `<br>`*****` |\n",
+        "| `8` | `       *       `<br>`      * *      `<br>`     *   *     `<br>`    *     *    `<br>`   *       *   `<br>`  *         *  `<br>` *           * `<br>`***************` |"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {},
+      "outputs": [],
+      "source": [
+        "# 04-08: การวาดสามเหลี่ยมสูง h\n",
+        "h = int(input())\n",
+        "\n",
+        "for i in range(1, h + 1):\n",
+        "    if i == 1:\n",
+        "        print(\" \" * (h - 1) + \"*\")\n",
+        "    elif i == h:\n",
+        "        print(\"*\" * (2 * h - 1))\n",
+        "    else:\n",
+        "        spaces_before = \" \" * (h - i)\n",
+        "        spaces_inside = \" \" * (2 * i - 3)\n",
+        "        print(spaces_before + \"*\" + spaces_inside + \"*\")\n"
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8.0"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 4
+}
+'@
+
+$nb = $fullLabJson | ConvertFrom-Json
+$updatedJson = $nb | ConvertTo-Json -Depth 100
+[System.IO.File]::WriteAllText($notebookPath, $updatedJson, [System.Text.Encoding]::UTF8)
+
+Write-Host "LAB EXERCISES NOTEBOOK UPDATED SUCCESSFULLY!"
